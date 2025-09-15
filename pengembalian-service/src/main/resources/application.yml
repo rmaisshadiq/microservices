@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: pengembalian-service
+server:
+  port: 8086

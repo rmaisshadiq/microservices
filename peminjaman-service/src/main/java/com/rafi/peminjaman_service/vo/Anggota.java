@@ -1,18 +1,20 @@
-package com.rafi.order_service.vo;
+package com.rafi.peminjaman_service.vo;
 
-public class Customer {
+public class Anggota {
     private Long id;
-    private String kode;
+    private String nim;
     private String nama;
     private String alamat;
+    private String jenis_kelamin;
 
-    public Customer() {}
+    private Anggota() {}
 
-    public Customer(Long id, String kode, String nama, String alamat) {
+    private Anggota(Long id, String nim, String nama, String alamat, String jenis_kelamin) {
         this.id = id;
-        this.kode = kode;
+        this.nim = nim;
         this.nama = nama;
         this.alamat = alamat;
+        this.jenis_kelamin = jenis_kelamin;
     }
 
     public Long getId() {
@@ -23,12 +25,12 @@ public class Customer {
         this.id = id;
     }
 
-    public String getKode() {
-        return kode;
+    public String getNim() {
+        return nim;
     }
 
-    public void setKode(String kode) {
-        this.kode = kode;
+    public void setNim(String nim) {
+        this.nim = nim;
     }
 
     public String getNama() {
@@ -45,6 +47,14 @@ public class Customer {
 
     public void setAlamat(String alamat) {
         this.alamat = alamat;
+    }
+
+    public String getJenis_kelamin() {
+        return jenis_kelamin;
+    }
+
+    public void setJenis_kelamin(String jenis_kelamin) {
+        this.jenis_kelamin = jenis_kelamin;
     }
 
     @Override

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -17,6 +19,9 @@ import com.rafi.order_service.vo.ResponseTemplate;
 public class OrderService {
     @Autowired
     private OrderRepository orderRepository;
+
+    @Autowired
+    private DiscoveryClient discoveryClient;
 
     @Autowired
     private RestTemplate restTemplate;
@@ -43,9 +48,11 @@ public class OrderService {
         if (order == null) {
             return null;
         }
-        Product product = restTemplate.getForObject("http://localhost:8082/api/products/"
+        ServiceInstance serviceInstance = discoveryClient.getInstances("product-service").get(0);
+        Product product = restTemplate.getForObject(serviceInstance.getUri() + "/api/products/"
             + order.getProdukId(), Product.class);
-        Customer customer = restTemplate.getForObject("http://localhost:8081/api/customers/"
+            serviceInstance = discoveryClient.getInstances("customer-service").get(0);
+        Customer customer = restTemplate.getForObject(serviceInstance.getUri() + "/api/customers/"
             + order.getPelangganId(), Customer.class);
         ResponseTemplate vo = new ResponseTemplate();
         vo.setOrder(order);
@@ -54,6 +61,5 @@ public class OrderService {
         responseList.add(vo);
         return responseList;
     }
-
     
 }

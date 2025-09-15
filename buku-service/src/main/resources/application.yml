@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: buku-service
+server:
+  port: 8085

@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: anggota-service
+server:
+  port: 8084
