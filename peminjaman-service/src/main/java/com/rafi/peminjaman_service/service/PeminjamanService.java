@@ -49,9 +49,10 @@ public class PeminjamanService {
         if (pinjam == null) {
             return null;
         }
-        ServiceInstance serviceInstance = discoveryClient.getInstances("peminjaman-service").get(0);
-        Anggota anggota = restTemplate.getForObject(serviceInstance.getUri() + "/api/peminjaman/"
+        ServiceInstance serviceInstance = discoveryClient.getInstances("anggota-service").get(0);
+        Anggota anggota = restTemplate.getForObject(serviceInstance.getUri() + "/api/anggota/"
             + pinjam.getAnggotaId(), Anggota.class);
+            serviceInstance = discoveryClient.getInstances("buku-service").get(0);
         Buku buku = restTemplate.getForObject(serviceInstance.getUri() + "/api/buku/"
             + pinjam.getBukuId(), Buku.class);
         ResponseTemplate vo = new ResponseTemplate();

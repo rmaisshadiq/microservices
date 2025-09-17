@@ -57,9 +57,9 @@ public class Peminjaman {
         this.tanggal_kembali = tanggal_kembali;
     }
 
-    @Override
-    public String toString() {
-        // TODO Auto-generated method stub
-        return super.toString();
-    }
+    // @Override
+    // public String toString() {
+    //     // TODO Auto-generated method stub
+    //     return super.toString();
+    // }
 }

@@ -49,7 +49,7 @@ public class PengembalianService {
         if (pengembalian == null) {
             return null;
         }
-        ServiceInstance serviceInstance = discoveryClient.getInstances("pengembalian-service").get(0);
+        ServiceInstance serviceInstance = discoveryClient.getInstances("peminjaman-service").get(0);
         Peminjaman peminjaman = restTemplate.getForObject(serviceInstance.getUri() + "/api/peminjaman/"
             + pengembalian.getPeminjamanId(), Peminjaman.class);
         ResponseTemplate vo = new ResponseTemplate();
