@@ -21,6 +21,26 @@ spring:
                               uri: lb://order-service
                               predicates: 
                                 - Path=api/orders/**
+
+                            - id: buku
+                              uri: lb://buku-service
+                              predicates: 
+                                - Path=api/buku/**
+
+                            - id: peminjaman
+                              uri: lb://peminjaman-service
+                              predicates: 
+                                - Path=api/peminjaman/**
+
+                            - id: pengembalian
+                              uri: lb://pengembalian-service
+                              predicates: 
+                                - Path=api/pengembalian/**
+
+                            - id: anggota
+                              uri: lb://anggota-service
+                              predicates: 
+                                - Path=api/anggota/**
                     
 eureka:
     client:

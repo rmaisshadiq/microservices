@@ -11,6 +11,8 @@ import org.springframework.web.client.RestTemplate;
 
 import com.rafi.pengembalian_service.model.Pengembalian;
 import com.rafi.pengembalian_service.repository.PengembalianRepository;
+import com.rafi.pengembalian_service.vo.Anggota;
+import com.rafi.pengembalian_service.vo.Buku;
 import com.rafi.pengembalian_service.vo.Peminjaman;
 import com.rafi.pengembalian_service.vo.ResponseTemplate;
 
@@ -47,15 +49,29 @@ public class PengembalianService {
         List<ResponseTemplate> responseList = new ArrayList<>();
         Pengembalian pengembalian = getPengembalianById(id);
         if (pengembalian == null) {
-            return null;
+            return responseList;
         }
         ServiceInstance serviceInstance = discoveryClient.getInstances("peminjaman-service").get(0);
         Peminjaman peminjaman = restTemplate.getForObject(serviceInstance.getUri() + "/api/peminjaman/"
             + pengembalian.getPeminjamanId(), Peminjaman.class);
-        ResponseTemplate vo = new ResponseTemplate();
-        vo.setPeminjaman(peminjaman);
-        vo.setPengembalian(pengembalian);
-        responseList.add(vo);
+
+        if (peminjaman != null) {
+            serviceInstance = discoveryClient.getInstances("anggota-service").get(0);
+            Anggota anggota = restTemplate.getForObject(serviceInstance.getUri() + "/api/anggota/" 
+            + peminjaman.getAnggotaId(), Anggota.class);
+
+            serviceInstance = discoveryClient.getInstances("buku-service").get(0);
+            Buku buku = restTemplate.getForObject(serviceInstance.getUri() + "/api/buku/"
+            + peminjaman.getBukuId(), Buku.class);
+            
+            ResponseTemplate vo = new ResponseTemplate();
+            vo.setAnggota(anggota);
+            vo.setBuku(buku);
+            vo.setPeminjaman(peminjaman);
+            vo.setPengembalian(pengembalian);
+            responseList.add(vo);
+        };
+        
         return responseList;
     }
 
