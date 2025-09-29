@@ -1,6 +1,6 @@
 spring:
   application:
-    name: peminjaman-service
+    name: rabbitmq-peminjaman
   datasource:
     url: jdbc:h2:mem:testdb
     driver-class-name: org.h2.Driver
@@ -45,6 +45,7 @@ app:
     queue: peminjaman.queue
     exchange: peminjaman.exchange
     routing-key: peminjaman.routing.key
-  
-server:
-  port: 8083
+
+logging:
+  level:
+    "[com.rafi.rabbitmq]": DEBUG

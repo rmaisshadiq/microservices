@@ -3,15 +3,17 @@ package com.rafi.peminjaman_service.vo;
 public class Anggota {
     private Long id;
     private String nim;
+    private String email;
     private String nama;
     private String alamat;
     private String jenis_kelamin;
 
     private Anggota() {}
 
-    private Anggota(Long id, String nim, String nama, String alamat, String jenis_kelamin) {
+    private Anggota(Long id, String nim, String email, String nama, String alamat, String jenis_kelamin) {
         this.id = id;
         this.nim = nim;
+        this.email = email;
         this.nama = nama;
         this.alamat = alamat;
         this.jenis_kelamin = jenis_kelamin;
@@ -31,6 +33,14 @@ public class Anggota {
 
     public void setNim(String nim) {
         this.nim = nim;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getNama() {

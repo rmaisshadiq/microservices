@@ -5,16 +5,14 @@ public class Peminjaman {
     private Long anggotaId;
     private Long bukuId;
     private String tanggal_pinjam;
-    private String tanggal_kembali;
 
     private Peminjaman() {}
 
-    private Peminjaman(Long id, Long anggotaId, Long bukuId, String tanggal_pinjam, String tanggal_kembali) {
+    private Peminjaman(Long id, Long anggotaId, Long bukuId, String tanggal_pinjam) {
         this.id = id;
         this.anggotaId = anggotaId;
         this.bukuId = bukuId;
         this.tanggal_pinjam = tanggal_pinjam;
-        this.tanggal_kembali = tanggal_kembali;
     }
 
     public Long getId() {
@@ -47,14 +45,6 @@ public class Peminjaman {
 
     public void setTanggal_pinjam(String tanggal_pinjam) {
         this.tanggal_pinjam = tanggal_pinjam;
-    }
-
-    public String getTanggal_kembali() {
-        return tanggal_kembali;
-    }
-
-    public void setTanggal_kembali(String tanggal_kembali) {
-        this.tanggal_kembali = tanggal_kembali;
     }
 
     // @Override

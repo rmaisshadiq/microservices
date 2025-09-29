@@ -1,0 +1,42 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "BukuServiceApplication",
+            "request": "launch",
+            "mainClass": "com.rafi.buku_service.BukuServiceApplication",
+            "projectName": "buku-service"
+        },
+        {
+            "type": "java",
+            "name": "AnggotaServiceApplication",
+            "request": "launch",
+            "mainClass": "com.rafi.anggota_service.AnggotaServiceApplication",
+            "projectName": "anggota-service"
+        },
+        {
+            "type": "java",
+            "name": "ApiGatewayApplication",
+            "request": "launch",
+            "mainClass": "com.rafi.api_gateway.ApiGatewayApplication",
+            "projectName": "api-gateway"
+        },
+        {
+            "type": "java",
+            "name": "EurekaServerApplication",
+            "request": "launch",
+            "mainClass": "com.rafi.eureka_server.EurekaServerApplication",
+            "projectName": "eureka-server"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-PeminjamanServiceApplication<peminjaman-service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.rafi.peminjaman_service.PeminjamanServiceApplication",
+            "projectName": "peminjaman-service",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

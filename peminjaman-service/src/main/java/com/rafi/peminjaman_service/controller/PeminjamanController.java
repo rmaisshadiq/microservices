@@ -2,13 +2,13 @@ package com.rafi.peminjaman_service.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rafi.peminjaman_service.model.Peminjaman;
-import com.rafi.peminjaman_service.service.PeminjamanService;
+import com.rafi.peminjaman_service.repository.PeminjamanRepository;
+import com.rafi.peminjaman_service.service.PeminjamanProducerService;
 import com.rafi.peminjaman_service.vo.ResponseTemplate;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,18 +20,26 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RestController
 @RequestMapping("/api/peminjaman")
 public class PeminjamanController {
-    @Autowired
-    private PeminjamanService peminjamanService;
+
+    private final PeminjamanProducerService peminjamanService;
+    private final PeminjamanRepository peminjamanRepository;
+
+    public PeminjamanController(PeminjamanProducerService peminjamanService, PeminjamanRepository peminjamanRepository) {
+        this.peminjamanService = peminjamanService;
+        this.peminjamanRepository = peminjamanRepository;
+    }
 
     @GetMapping
-    public List<Peminjaman> getAllPeminjamans() {
-        return peminjamanService.getAllPeminjamans();
+    public ResponseEntity<List<ResponseTemplate>> getAllPeminjamans() {
+        List<ResponseTemplate> responseTemplate = peminjamanService.getAllPeminjamans();
+        return responseTemplate != null ? ResponseEntity.ok(responseTemplate): ResponseEntity.notFound().build();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Peminjaman> getPeminjamanById(@PathVariable Long id) {
-        Peminjaman peminjaman = peminjamanService.getPeminjamanById(id);
-        return peminjaman != null ? ResponseEntity.ok(peminjaman) : ResponseEntity.notFound().build();
+        return peminjamanRepository.findById(id)
+            .map(ResponseEntity::ok)
+            .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/anggota/{id}")
@@ -41,8 +49,9 @@ public class PeminjamanController {
     }
 
     @PostMapping
-    public Peminjaman createPeminjaman(@RequestBody Peminjaman peminjaman) {
-        return peminjamanService.createPeminjaman(peminjaman);
+    public ResponseEntity<Peminjaman> createPeminjaman(@RequestBody Peminjaman peminjaman) {
+        Peminjaman savedPeminjaman = peminjamanService.createPeminjaman(peminjaman);
+        return ResponseEntity.ok(savedPeminjaman);
     }
 
     @DeleteMapping
