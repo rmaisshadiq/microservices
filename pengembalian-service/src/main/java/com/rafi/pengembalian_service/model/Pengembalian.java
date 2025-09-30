@@ -1,5 +1,8 @@
 package com.rafi.pengembalian_service.model;
 
+
+import java.time.LocalDate;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,7 +16,8 @@ public class Pengembalian {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long peminjamanId;
-    private String tanggal_dikembalikan;
-    private String terlambat;
+    private LocalDate tanggal_dikembalikan;
+    private long terlambat;
     private double denda;
+
 }

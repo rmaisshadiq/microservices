@@ -1,5 +1,6 @@
 package com.rafi.peminjaman_service.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
@@ -20,7 +21,8 @@ public class Peminjaman {
     private Long id;
     private Long anggotaId;
     private Long bukuId;
-    private LocalDateTime tanggal_pinjam;
+    private LocalDate tanggal_pinjam;
+    private LocalDate tanggal_kembali;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -32,7 +34,7 @@ public class Peminjaman {
 
     public Peminjaman() {
         this.status = PinjamStatus.PENDING;
-        this.tanggal_pinjam = LocalDateTime.now();
+        this.tanggal_pinjam = LocalDate.now();
     }
 
     public Peminjaman(Long anggotaId, Long bukuId) {
@@ -43,7 +45,7 @@ public class Peminjaman {
 
     @PrePersist
     protected void onCreate() {
-        this.tanggal_pinjam = LocalDateTime.now();
+        this.tanggal_pinjam = LocalDate.now();
     }
 
     @Override
@@ -53,6 +55,7 @@ public class Peminjaman {
                 ", anggotaId=" + anggotaId +
                 ", bukuId=" + bukuId +
                 ", tanggal_pinjam=" + tanggal_pinjam +
+                ", tanggal_kembali=" + tanggal_kembali +
                 ", status=" + status +
                 '}';
     }

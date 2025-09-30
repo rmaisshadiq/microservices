@@ -2,6 +2,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "ProductServiceApplication",
+            "request": "launch",
+            "mainClass": "com.rafi.product_service.ProductServiceApplication",
+            "projectName": "product-service"
+        },
+        {
+            "type": "java",
+            "name": "PengembalianServiceApplication",
+            "request": "launch",
+            "mainClass": "com.rafi.pengembalian_service.PengembalianServiceApplication",
+            "projectName": "pengembalian-service"
+        },
+        {
+            "type": "java",
             "name": "BukuServiceApplication",
             "request": "launch",
             "mainClass": "com.rafi.buku_service.BukuServiceApplication",

@@ -1,5 +1,7 @@
 package com.rafi.pengembalian_service.service;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +18,8 @@ import com.rafi.pengembalian_service.vo.Buku;
 import com.rafi.pengembalian_service.vo.Peminjaman;
 import com.rafi.pengembalian_service.vo.ResponseTemplate;
 
+import jakarta.transaction.Transactional;
+
 
 @Service
 public class PengembalianService {
@@ -28,6 +32,8 @@ public class PengembalianService {
     @Autowired
     private RestTemplate restTemplate;
 
+    private static double dendaPerHari = 1000;
+
     public List<Pengembalian> getAllPengembalians() {
         return pengembalianRepository.findAll();
     }
@@ -37,7 +43,29 @@ public class PengembalianService {
         return pengembalianRepository.findById(id).orElse(null);
     }
 
+    @Transactional
     public Pengembalian createPengembalian(Pengembalian pengembalian) {
+        Long peminjamanId = pengembalian.getPeminjamanId();
+        ServiceInstance serviceInstance = discoveryClient.getInstances("peminjaman-service").get(0);
+        Peminjaman peminjaman = restTemplate.getForObject(serviceInstance.getUri() + "/api/peminjaman/"
+            + peminjamanId, Peminjaman.class);
+
+        if (peminjaman == null) {
+            throw new RuntimeException("ID Peminjaman tidak ditemukan dari service peminjaman: " + pengembalian.getPeminjamanId());
+        }
+
+        LocalDate tanggalDikembalikan = pengembalian.getTanggal_dikembalikan();
+        LocalDate tanggalHarusKembali = peminjaman.getTanggal_kembali();
+
+        long selisihHari = 0;
+        if (tanggalDikembalikan.isAfter(tanggalHarusKembali)) {
+            selisihHari = ChronoUnit.DAYS.between(tanggalHarusKembali, tanggalDikembalikan);
+        }
+
+        double denda = selisihHari * dendaPerHari;
+
+        pengembalian.setTerlambat(selisihHari);
+        pengembalian.setDenda(denda);
         return pengembalianRepository.save(pengembalian);
     }
 

@@ -3,19 +3,14 @@ package com.rafi.peminjaman_service.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
-import org.springframework.mail.MailException;
-import org.springframework.mail.MailSender;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.rabbitmq.client.RpcClient.Response;
 import com.rafi.peminjaman_service.model.Peminjaman;
 import com.rafi.peminjaman_service.repository.PeminjamanRepository;
 import com.rafi.peminjaman_service.vo.Anggota;

@@ -1,18 +1,22 @@
 package com.rafi.pengembalian_service.vo;
 
+import java.time.LocalDate;
+
 public class Peminjaman {
     private Long id;
     private Long anggotaId;
     private Long bukuId;
-    private String tanggal_pinjam;
+    private LocalDate tanggal_pinjam;
+    private LocalDate tanggal_kenbali;
 
     private Peminjaman() {}
 
-    private Peminjaman(Long id, Long anggotaId, Long bukuId, String tanggal_pinjam) {
+    private Peminjaman(Long id, Long anggotaId, Long bukuId, LocalDate tanggal_pinjam, LocalDate tanggal_kembali) {
         this.id = id;
         this.anggotaId = anggotaId;
         this.bukuId = bukuId;
         this.tanggal_pinjam = tanggal_pinjam;
+        this.tanggal_kenbali = tanggal_kembali;
     }
 
     public Long getId() {
@@ -39,12 +43,20 @@ public class Peminjaman {
         this.bukuId = bukuId;
     }
 
-    public String getTanggal_pinjam() {
+    public LocalDate getTanggal_pinjam() {
         return tanggal_pinjam;
     }
 
-    public void setTanggal_pinjam(String tanggal_pinjam) {
+    public void setTanggal_pinjam(LocalDate tanggal_pinjam) {
         this.tanggal_pinjam = tanggal_pinjam;
+    }
+
+    public LocalDate getTanggal_kembali() {
+        return tanggal_kenbali;
+    }
+
+    public void setTanggal_kembali(LocalDate tanggal_kembali) {
+        this.tanggal_kenbali = tanggal_kembali;
     }
 
     // @Override

@@ -1,6 +1,7 @@
 package com.rafi.order_service.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,13 +29,13 @@ public class OrderController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Order> getOrderById(@PathVariable Long id) {
+    public ResponseEntity<Order> getOrderById(@PathVariable UUID id) {
         Order order = orderService.getOrderById(id);
         return order != null ? ResponseEntity.ok(order) : ResponseEntity.notFound().build();
     }
 
     @GetMapping("/product/{id}")
-    public ResponseEntity<List<ResponseTemplate>> getOrderWithProductById(@PathVariable Long id) {
+    public ResponseEntity<List<ResponseTemplate>> getOrderWithProductById(@PathVariable UUID id) {
         List<ResponseTemplate> responseTemplate = orderService.getAllOrderWithProductAndCustomer(id);
         return responseTemplate != null ? ResponseEntity.ok(responseTemplate): ResponseEntity.notFound().build();
     }
@@ -45,7 +46,7 @@ public class OrderController {
     }
 
     @DeleteMapping
-    public ResponseEntity<?> deleteOrder(@PathVariable Long id) {
+    public ResponseEntity<?> deleteOrder(@PathVariable UUID id) {
         orderService.deleteOrder(id);
         return ResponseEntity.ok().build();
     }

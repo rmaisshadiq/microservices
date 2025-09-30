@@ -2,6 +2,7 @@ package com.rafi.order_service.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
@@ -30,7 +31,7 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
-    public Order getOrderById(Long id) {
+    public Order getOrderById(UUID id) {
         return orderRepository.findById(id).orElse(null);
     }
 
@@ -38,11 +39,11 @@ public class OrderService {
         return orderRepository.save(order);
     }
 
-    public void deleteOrder(Long id) {
+    public void deleteOrder(UUID id) {
         orderRepository.deleteById(id);
     }
 
-    public List<ResponseTemplate> getAllOrderWithProductAndCustomer(Long id) {
+    public List<ResponseTemplate> getAllOrderWithProductAndCustomer(UUID id) {
         List<ResponseTemplate> responseList = new ArrayList<>();
         Order order = getOrderById(id);
         if (order == null) {
