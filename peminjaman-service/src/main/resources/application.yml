@@ -1,19 +1,18 @@
 spring:
   application:
     name: peminjaman-service
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/peminjaman_query_db
   datasource:
-    url: jdbc:h2:mem:testdb
+    url: jdbc:h2:file:./target/h2db/db/peminjaman;DB_CLOSE_DELAY= -1
     driver-class-name: org.h2.Driver
     username: sa
     password: password
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: create-drop
-    show-sql: true
-    properties:
-      hibernate:
-        "[format_sql]": true
+      ddl-auto: update
   h2:
     console:
       enabled: true
@@ -39,6 +38,12 @@ spring:
       "[mail.smtp.writetimeout]": 5000
       "[mail.smtp.auth]": true
       "[mail.smtp.starttls.enable]": true
+  
+logging:
+  file:
+    name: peminjaman.log
+    path: /opt/logs/
+  
 
 app:
   rabbitmq:

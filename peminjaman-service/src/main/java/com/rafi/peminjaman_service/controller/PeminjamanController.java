@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rafi.peminjaman_service.model.Peminjaman;
-import com.rafi.peminjaman_service.repository.PeminjamanRepository;
+import com.rafi.peminjaman_service.model.PeminjamanQuery;
+import com.rafi.peminjaman_service.repository.PeminjamanQueryRepository;
 import com.rafi.peminjaman_service.service.PeminjamanProducerService;
 import com.rafi.peminjaman_service.vo.ResponseTemplate;
 
@@ -22,11 +23,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class PeminjamanController {
 
     private final PeminjamanProducerService peminjamanService;
-    private final PeminjamanRepository peminjamanRepository;
+    private final PeminjamanQueryRepository peminjamanQueryRepository;
 
-    public PeminjamanController(PeminjamanProducerService peminjamanService, PeminjamanRepository peminjamanRepository) {
+    public PeminjamanController(PeminjamanProducerService peminjamanService, PeminjamanQueryRepository peminjamanQueryRepository) {
         this.peminjamanService = peminjamanService;
-        this.peminjamanRepository = peminjamanRepository;
+        this.peminjamanQueryRepository = peminjamanQueryRepository;
     }
 
     @GetMapping
@@ -36,8 +37,8 @@ public class PeminjamanController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Peminjaman> getPeminjamanById(@PathVariable Long id) {
-        return peminjamanRepository.findById(id)
+    public ResponseEntity<PeminjamanQuery> getPeminjamanById(@PathVariable Long id) {
+        return peminjamanQueryRepository.findById(id)
             .map(ResponseEntity::ok)
             .orElse(ResponseEntity.notFound().build());
     }

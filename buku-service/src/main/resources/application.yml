@@ -5,7 +5,7 @@ spring:
     mongodb:
       uri: mongodb://localhost:27017/buku_query_db
   datasource:
-    url: jdbc:h2:file:./target/h2db/db/produk;DB_CLOSE_DELAY= -1
+    url: jdbc:h2:file:./target/h2db/db/perpustakaan;DB_CLOSE_DELAY= -1
     driver-class-name: org.h2.Driver
     username: sa
     password: password

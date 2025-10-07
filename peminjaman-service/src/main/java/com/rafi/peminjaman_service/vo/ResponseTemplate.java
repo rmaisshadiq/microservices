@@ -1,25 +1,25 @@
 package com.rafi.peminjaman_service.vo;
 
-import com.rafi.peminjaman_service.model.Peminjaman;
+import com.rafi.peminjaman_service.model.PeminjamanQuery;
 
 public class ResponseTemplate {
-    Peminjaman peminjaman;
+    PeminjamanQuery peminjaman;
     Anggota anggota;
     Buku buku;
 
     public ResponseTemplate() {}
 
-    public ResponseTemplate(Peminjaman peminjaman, Anggota anggota, Buku buku) {
+    public ResponseTemplate(PeminjamanQuery peminjaman, Anggota anggota, Buku buku) {
         this.peminjaman = peminjaman;
         this.anggota = anggota;
         this.buku = buku;
     }
 
-    public Peminjaman getPeminjaman() {
+    public PeminjamanQuery getPeminjaman() {
         return peminjaman;
     }
 
-    public void setPeminjaman(Peminjaman peminjaman) {
+    public void setPeminjaman(PeminjamanQuery peminjaman) {
         this.peminjaman = peminjaman;
     }
 

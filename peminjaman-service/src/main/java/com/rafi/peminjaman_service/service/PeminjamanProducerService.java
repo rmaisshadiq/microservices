@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.rafi.peminjaman_service.model.Peminjaman;
+import com.rafi.peminjaman_service.model.PeminjamanQuery;
+import com.rafi.peminjaman_service.repository.PeminjamanQueryRepository;
 import com.rafi.peminjaman_service.repository.PeminjamanRepository;
 import com.rafi.peminjaman_service.vo.Anggota;
 import com.rafi.peminjaman_service.vo.Buku;
@@ -25,6 +27,7 @@ public class PeminjamanProducerService {
 
     private final RabbitTemplate rabbitTemplate;
     private final PeminjamanRepository peminjamanRepository;
+    private final PeminjamanQueryRepository peminjamanQueryRepository;
 
     @Autowired
     private DiscoveryClient discoveryClient;
@@ -38,13 +41,14 @@ public class PeminjamanProducerService {
     @Value("${app.rabbitmq.routing-key}")
     private String routingKey;
 
-    public PeminjamanProducerService(RabbitTemplate rabbitTemplate, PeminjamanRepository peminjamanRepository) {
+    public PeminjamanProducerService(RabbitTemplate rabbitTemplate, PeminjamanRepository peminjamanRepository, PeminjamanQueryRepository peminjamanQueryRepository) {
         this.rabbitTemplate = rabbitTemplate;
         this.peminjamanRepository = peminjamanRepository;
+        this.peminjamanQueryRepository = peminjamanQueryRepository;
     }
 
-    public Peminjaman getPeminjamanById(Long id) {
-        return peminjamanRepository.findById(id).orElse(null);
+    public PeminjamanQuery getPeminjamanById(Long id) {
+        return peminjamanQueryRepository.findById(id).orElse(null);
     }
 
     @Transactional
@@ -64,7 +68,7 @@ public class PeminjamanProducerService {
 
     public List<ResponseTemplate> getAllPeminjamanWithAnggotaAndBuku(Long id) {
         List<ResponseTemplate> responseList = new ArrayList<>();
-        Peminjaman pinjam = getPeminjamanById(id);
+        PeminjamanQuery pinjam = getPeminjamanById(id);
         if (pinjam == null) {
             return null;
         }
@@ -83,14 +87,14 @@ public class PeminjamanProducerService {
     }
 
     public List<ResponseTemplate> getAllPeminjamans() {
-        List<Peminjaman> semuaPeminjaman = peminjamanRepository.findAll();
+        List<PeminjamanQuery> semuaPeminjaman = peminjamanQueryRepository.findAll();
         if (semuaPeminjaman.isEmpty()) {
             return new ArrayList<>();
         }
 
         List<ResponseTemplate> responseList = new ArrayList<>();
 
-        for (Peminjaman pinjam : semuaPeminjaman) {
+        for (PeminjamanQuery pinjam : semuaPeminjaman) {
             // Panggil service lain menggunakan ID dari objek 'pinjam' yang sedang di-loop
             ServiceInstance serviceInstanceAnggota = discoveryClient.getInstances("anggota-service").get(0);
             Anggota anggota = restTemplate.getForObject(serviceInstanceAnggota.getUri() + "/api/anggota/" 
