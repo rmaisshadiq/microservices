@@ -3,3 +3,12 @@ spring:
     name: pengembalian-service
 server:
   port: 8086
+
+eureka:
+    client:
+        register-with-eureka: true
+        fetch-registry: true
+        service-url:
+            defaultZone: http://eureka-server:8761/eureka/
+    instance:
+        prefer-ip-address: true

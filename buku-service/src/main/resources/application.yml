@@ -3,9 +3,9 @@ spring:
     name: buku-service
   data:
     mongodb:
-      uri: mongodb://localhost:27017/buku_query_db
+      uri: mongodb://admin:password@mongo-db:27017/buku_query_db?authSource=admin
   datasource:
-    url: jdbc:h2:file:./target/h2db/db/perpustakaan;DB_CLOSE_DELAY= -1
+    url: jdbc:h2:file:/data/buku;DB_CLOSE_DELAY= -1
     driver-class-name: org.h2.Driver
     username: sa
     password: password
@@ -19,11 +19,11 @@ spring:
       ddl-auto: update
   kafka:
     producer:
-      bootstrap-servers: http://localhost:9092
+      bootstrap-servers: kafka:29092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
     consumer:
-      bootstrap-servers: http://localhost:9092
+      bootstrap-servers: kafka:29092
       group-id: buku-service-group
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
@@ -34,9 +34,13 @@ spring:
               packages: com.rafi.buku_service.*
         
 eureka:
-  client:
-    service-url:
-      default-zone: http://localhost:8761/eureka/
+    client:
+        register-with-eureka: true
+        fetch-registry: true
+        service-url:
+            defaultZone: http://eureka-server:8761/eureka/
+    instance:
+        prefer-ip-address: true
 
 server:
   port: 8085
