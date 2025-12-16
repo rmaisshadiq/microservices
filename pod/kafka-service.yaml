@@ -1,0 +1,93 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-deployment
+  labels:
+    app: kafka
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka
+  template:
+    metadata:
+      labels:
+        app: kafka
+    spec:
+      containers:
+        - name: kafka-container
+          image: apache/kafka:latest # Sebaiknya gunakan tag versi spesifik yang stabil
+          imagePullPolicy: IfNotPresent
+          
+          ports:
+            # Port untuk Client (digunakan oleh microservices)
+            - containerPort: 29092
+            # Port Controller (digunakan internal oleh Kafka Kraft)
+            - containerPort: 29093
+            # Port Host/External (jika diperlukan)
+            - containerPort: 9092
+          
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "500m"
+            limits:
+              memory: "1Gi"
+              cpu: "1"
+              
+          # Menginjeksi semua variabel Kafka dari ConfigMap
+          envFrom:
+            - configMapRef:
+                name: kafka-config
+          
+          # ------------------------------------------------------------------
+          # DITAMBAHKAN: Health Checks
+          # ------------------------------------------------------------------
+          # Kafka memerlukan waktu inisialisasi yang lama.
+          readinessProbe:
+            tcpSocket:
+              port: 29092 # Cek koneksi ke port PLAINTEXT internal
+            initialDelaySeconds: 40
+            periodSeconds: 15
+            failureThreshold: 5
+          livenessProbe:
+            tcpSocket:
+              port: 29092
+            initialDelaySeconds: 80
+            periodSeconds: 40
+            
+          # Catatan: Untuk Production, gunakan PersistentVolumeClaim untuk KAFKA_LOG_DIRS
+
+---
+# ----------------------------------------------
+#  SERVICE: 
+# ----------------------------------------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka # Nama Service yang digunakan oleh client (SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:29092)
+  labels:
+    app: kafka
+spec:
+  type: ClusterIP 
+  selector:
+    app: kafka # Match dengan label di Deployment
+  ports:
+    # Port PLAINTEXT Internal (Digunakan oleh microservices, koneksi bootstrap)
+    - name: plaintext-internal
+      protocol: TCP
+      port: 29092
+      targetPort: 29092
+      
+    # Port Controller Internal (Digunakan oleh Kafka Kraft)
+    - name: controller
+      protocol: TCP
+      port: 29093
+      targetPort: 29093
+      
+    # Port PLAINTEXT_HOST (Jika ada kebutuhan akses eksternal, gunakan NodePort/LoadBalancer)
+    - name: host-external
+      protocol: TCP
+      port: 9092
+      targetPort: 9092
+      # Jika Anda ingin port 9092 diakses dari luar, ubah type Service menjadi NodePort/LoadBalancer

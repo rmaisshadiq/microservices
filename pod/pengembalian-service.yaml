@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: product-service-deployment
+  name: pengembalian-service-deployment
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
-      app: product-service
+      app: pengembalian-service
   template:
     metadata:
       labels:
-        app: product-service
+        app: pengembalian-service
     spec:
       containers:
-        - name: product-service-container
-          image: arsitekturberbasislayanan-product-service:latest
+        - name: pengembalian-service-container
+          image: arsitekturberbasislayanan-pengembalian-service:latest
           imagePullPolicy: IfNotPresent
 
           ports:
-            - containerPort: 8082
+            - containerPort: 8086
           
           resources:
             requests:
@@ -31,13 +31,13 @@ spec:
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
-              port: 8082
+              port: 8086
             initialDelaySeconds: 15
             periodSeconds: 20
           readinessProbe:
             httpGet:
               path: /actuator/health/readiness
-              port: 8082
+              port: 8086
             initialDelaySeconds: 5
             periodSeconds: 10
           
@@ -78,26 +78,27 @@ spec:
                   name: rabbitmq-secret
                   key: password
             - name: SPRING_DATASOURCE_URL
-              value: "jdbc:h2:file:/data/product"
+              value: "jdbc:h2:file:/data/pengembalian"
             - name: SPRING_DATASOURCE_USERNAME
               value: "sa"
             - name: SPRING_DATASOURCE_PASSWORD
               value: "password"
             - name: SERVER_PORT
-              value: "8082"
+              value: "8086"
 
+---
 # ----------------------------------------------
 #  SERVICE: 
 # ----------------------------------------------
 apiVersion: v1
 kind: Service
 metadata:
-  name: product-service-svc
+  name: pengembalian-service-svc
 spec:
   type: LoadBalancer
   selector:
-    app: product-service
+    app: pengembalian-service
   ports:
     - protocol: TCP
-      port: 8082
-      targetPort: 8082
+      port: 8086
+      targetPort: 8086

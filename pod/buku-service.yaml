@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: product-service-deployment
+  name: buku-service-deployment
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: product-service
+      app: buku-service
   template:
     metadata:
       labels:
-        app: product-service
+        app: buku-service
     spec:
       containers:
-        - name: product-service-container
-          image: arsitekturberbasislayanan-product-service:latest
+        - name: buku-service-container
+          image: arsitekturberbasislayanan-buku-service:latest
           imagePullPolicy: IfNotPresent
 
           ports:
-            - containerPort: 8082
+            - containerPort: 8085
           
           resources:
             requests:
@@ -27,17 +27,17 @@ spec:
             limits:
               memory: "768Mi"
               cpu: "500m"
-          
+
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
-              port: 8082
+              port: 8085
             initialDelaySeconds: 15
             periodSeconds: 20
           readinessProbe:
             httpGet:
               path: /actuator/health/readiness
-              port: 8082
+              port: 8085
             initialDelaySeconds: 5
             periodSeconds: 10
           
@@ -77,27 +77,45 @@ spec:
                 secretKeyRef:
                   name: rabbitmq-secret
                   key: password
-            - name: SPRING_DATASOURCE_URL
-              value: "jdbc:h2:file:/data/product"
-            - name: SPRING_DATASOURCE_USERNAME
-              value: "sa"
-            - name: SPRING_DATASOURCE_PASSWORD
-              value: "password"
+            - name: SPRING_DATA_MONGODB_URI
+              valueFrom:
+                configMapKeyRef:
+                  name: buku-service-config
+                  key: spring.data.mongodb.uri
+            - name: SPRING_DATA_MONGODB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: mongo-username
+            - name: SPRING_DATA_MONGODB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: mongo-password
             - name: SERVER_PORT
-              value: "8082"
+              valueFrom:
+                configMapKeyRef:
+                  name: buku-service-config
+                  key: server.port
+            - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
+              valueFrom:
+                configMapKeyRef:
+                  name: buku-service-config
+                  key: spring.kafka.bootstrap-servers
 
+---
 # ----------------------------------------------
 #  SERVICE: 
 # ----------------------------------------------
 apiVersion: v1
 kind: Service
 metadata:
-  name: product-service-svc
+  name: buku-service-svc
 spec:
   type: LoadBalancer
   selector:
-    app: product-service
+    app: buku-service
   ports:
     - protocol: TCP
-      port: 8082
-      targetPort: 8082
+      port: 8085
+      targetPort: 8085

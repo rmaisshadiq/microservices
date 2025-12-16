@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: service-config # Nama ConfigMap yang akan direferensikan
+data:
+  # Konfigurasi Aplikasi dan Discovery
+  spring.profile.active: k8s
+
+  # Konfigurasi Eureka
+  eureka.client.serviceurl.defaultzone: http://eureka-server:8761/eureka/
+  eureka.instance.prefer_ip_address: "true"
+
+  # Konfigurasi Message Broker (RabbitMQ)
+  spring.rabbitmq.host: rabbitmq
+  spring.rabbitmq.port: "5672"
+  

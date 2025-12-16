@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: buku-service-config
+data:
+  server.port: "8085"
+  spring.kafka.bootstrap-servers: kafka:29092
+  spring.data.mongodb.uri: mongodb://mongodb-svc:27017/bukudb
