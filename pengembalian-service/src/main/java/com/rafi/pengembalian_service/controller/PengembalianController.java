@@ -24,8 +24,9 @@ public class PengembalianController {
     private PengembalianService pengembalianService;
 
     @GetMapping
-    public List<Pengembalian> getAllPengembalians() {
-        return pengembalianService.getAllPengembalians();
+    public ResponseEntity<List<ResponseTemplate>> getAllPengembalians() {
+        List<ResponseTemplate> responseTemplate = pengembalianService.getAllPengembalians();
+        return responseTemplate != null ? ResponseEntity.ok(responseTemplate): ResponseEntity.notFound().build();
     }
 
     @GetMapping("/{id}")

@@ -34,8 +34,36 @@ public class PengembalianService {
 
     private static double dendaPerHari = 1000;
 
-    public List<Pengembalian> getAllPengembalians() {
-        return pengembalianRepository.findAll();
+    public List<ResponseTemplate> getAllPengembalians() {
+        List<Pengembalian> pengembalian = pengembalianRepository.findAll();
+        if (pengembalian.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        List<ResponseTemplate> responseList = new ArrayList<>();
+        for (Pengembalian p : pengembalian) {
+            ServiceInstance serviceInstance = discoveryClient.getInstances("peminjaman-service").get(0);
+            Peminjaman peminjaman = restTemplate.getForObject(serviceInstance.getUri() + "/api/peminjaman/"
+                + p.getPeminjamanId(), Peminjaman.class);
+
+            if (peminjaman != null) {
+                serviceInstance = discoveryClient.getInstances("anggota-service").get(0);
+                Anggota anggota = restTemplate.getForObject(serviceInstance.getUri() + "/api/anggota/" 
+                + peminjaman.getAnggotaId(), Anggota.class);
+
+                serviceInstance = discoveryClient.getInstances("buku-service").get(0);
+                Buku buku = restTemplate.getForObject(serviceInstance.getUri() + "/api/buku/"
+                + peminjaman.getBukuId(), Buku.class);
+
+                ResponseTemplate vo = new ResponseTemplate();
+                vo.setAnggota(anggota);
+                vo.setBuku(buku);
+                vo.setPeminjaman(peminjaman);
+                vo.setPengembalian(p);
+                responseList.add(vo);
+            };
+        }
+        return responseList;
     }
 
 
