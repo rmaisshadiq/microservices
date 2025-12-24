@@ -63,3 +63,15 @@ eureka:
             defaultZone: http://eureka-server:8761/eureka/
     instance:
         prefer-ip-address: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus # Izinkan prometheus masuk
+  endpoint:
+    prometheus:
+      enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name} # Biar ketauan ini data dari servis mana

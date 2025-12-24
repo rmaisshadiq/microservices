@@ -13,3 +13,15 @@ logging:
   level:
     com.netflix.eureka: OFF
     com.netflix.discovery: OFF
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus # Izinkan prometheus masuk
+  endpoint:
+    prometheus:
+      enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name} # Biar ketauan ini data dari servis mana
