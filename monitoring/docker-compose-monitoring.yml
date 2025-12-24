@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  # 1. SI PENGUMPUL DATA (Prometheus)
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      # Kita butuh file config buat ngasih tau dia harus ngintip siapa aja
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - microservices-net
+
+  # 2. SI PENAMPIL GRAFIK (Grafana)
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000" # Port default Grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=password # Ganti sesuka hati
+    depends_on:
+      - prometheus
+    networks:
+      - microservices-net
+
+# PENTING: Pake network yg sama kayak microservice kamu
+networks:
+  microservices-net:
+    external: true
+    name: arsitekturberbasislayanan_microservices-network
