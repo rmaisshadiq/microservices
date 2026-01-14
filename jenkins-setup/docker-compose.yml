@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   jenkins:
-    image: jenkins/jenkins:lts-jdk17 # Menggunakan versi Java 17 (sesuai Spring Boot 3)
+    image: jenkins/jenkins:lts-jdk17
     container_name: jenkins-server
     build: .
     user: root
@@ -10,7 +10,6 @@ services:
       - "50000:50000"
     volumes:
       - ./jenkins_data:/var/jenkins_home
-      # PENTING: Mounting Docker Socket agar Jenkins bisa menjalankan perintah 'docker build'
       - /var/run/docker.sock:/var/run/docker.sock
     restart: unless-stopped
     networks:

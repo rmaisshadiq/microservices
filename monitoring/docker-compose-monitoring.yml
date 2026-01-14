@@ -8,26 +8,23 @@ services:
     ports:
       - "9091:9090"
     volumes:
-      # Kita butuh file config buat ngasih tau dia harus ngintip siapa aja
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
     networks:
       - microservices-net
 
-  # 2. SI PENAMPIL GRAFIK (Grafana)
   grafana:
     image: grafana/grafana:latest
     container_name: grafana
     ports:
-      - "3000:3000" # Port default Grafana
+      - "3000:3000"
     environment:
       - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=password # Ganti sesuka hati
+      - GF_SECURITY_ADMIN_PASSWORD=password
     depends_on:
       - prometheus
     networks:
       - microservices-net
 
-# PENTING: Pake network yg sama kayak microservice kamu
 networks:
   microservices-net:
     external: true
