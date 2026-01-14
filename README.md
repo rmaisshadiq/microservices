@@ -2,14 +2,12 @@
 
 > **DevOps & Observability Edition**
 
-<div align="center">
-[![Java](https://img.shields.io/badge/Java-17-orange?style=for-the-badge&logo=java)]()
-[![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.x-green?style=for-the-badge&logo=spring-boot)]()
-[![Docker](https://img.shields.io/badge/Docker-Container-blue?style=for-the-badge&logo=docker)]()
-[![Jenkins](https://img.shields.io/badge/Jenkins-CI%2FCD-red?style=for-the-badge&logo=jenkins)]()
-[![ELK Stack](https://img.shields.io/badge/ELK-Logging-yellow?style=for-the-badge&logo=elastic)]()
-[![Grafana](https://img.shields.io/badge/Grafana-Monitoring-orange?style=for-the-badge&logo=grafana)]()
-</div>
+![Java](https://img.shields.io/badge/Java-17-orange?style=for-the-badge&logo=java)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.x-green?style=for-the-badge&logo=spring-boot)
+![Docker](https://img.shields.io/badge/Docker-Container-blue?style=for-the-badge&logo=docker)
+![Jenkins](https://img.shields.io/badge/Jenkins-CI%2FCD-red?style=for-the-badge&logo=jenkins)
+![ELK Stack](https://img.shields.io/badge/ELK-Logging-yellow?style=for-the-badge&logo=elastic)
+![Grafana](https://img.shields.io/badge/Grafana-Monitoring-orange?style=for-the-badge&logo=grafana)
 
 ## 📝 Table of Contents
 
