@@ -81,14 +81,16 @@ The system is composed of loose-coupled services communicating via REST APIs and
 * Docker & Docker Compose installed.
 * Minimum 16GB RAM recommended (for full stack running).
 
-**Step 1: Start Infrastructure (Database & Brokers)**
+### Step 1: Start Infrastructure (Database & Brokers)
+
 First, spin up the foundation services (MongoDB, Kafka, RabbitMQ, Eureka).
 
 ```bash
 docker-compose -f docker-compose.yml up -d
 ```
 
-**Step 2: Start Jenkins (CI/CD)**
+### Step 2: Start Jenkins (CI/CD)
+
 Run the Jenkins server to handle the build process.
 
 ```bash
@@ -99,7 +101,8 @@ docker-compose -f docker-compose.yml up -d
 * **Initial Setup:** Access localhost:9090, retrieve the initial admin password from container logs, and install recommended plugins + Docker Pipeline plugin.
 * **Pipeline Setup:** Create a new "Pipeline" job and point it to the Service Git Repository.
 
-**Step 3: Start Observability Stack (Optional but Recommended)**
+### Step 3: Start Observability Stack (Optional but Recommended)
+
 To enable Logging (ELK) and Monitoring (Prometheus/Grafana).
 
 ```bash
