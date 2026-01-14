@@ -85,14 +85,15 @@ The system is composed of loose-coupled services communicating via REST APIs and
 First, spin up the foundation services (MongoDB, Kafka, RabbitMQ, Eureka).
 
 ```bash
-docker-compose -f docker-compose-infra.yml up -d
+docker-compose -f docker-compose.yml up -d
 ```
 
 **Step 2: Start Jenkins (CI/CD)**
 Run the Jenkins server to handle the build process.
 
 ```bash
-docker-compose -f jenkins-compose.yml up -d
+cd jenkins-setup
+docker-compose -f docker-compose.yml up -d
 ```
 
 * **Initial Setup:** Access localhost:9090, retrieve the initial admin password from container logs, and install recommended plugins + Docker Pipeline plugin.
@@ -122,8 +123,8 @@ The pipeline automatically builds the JAR, creates a Docker Image, and deploys t
 ```groovy
 pipeline {
     agent any
-    environment { 
-        IMAGE_NAME = "buku-service" 
+    environment {
+        IMAGE_NAME = "buku-service"
     }
     stages {
         stage('Build JAR') {
