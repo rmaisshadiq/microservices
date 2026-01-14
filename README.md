@@ -2,14 +2,29 @@
 
 > **DevOps & Observability Edition**
 
-![Java](https://img.shields.io/badge/Java-17-orange?style=for-the-badge&logo=java)
-![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.x-green?style=for-the-badge&logo=spring-boot)
-![Docker](https://img.shields.io/badge/Docker-Container-blue?style=for-the-badge&logo=docker)
-![Jenkins](https://img.shields.io/badge/Jenkins-CI%2FCD-red?style=for-the-badge&logo=jenkins)
-![ELK Stack](https://img.shields.io/badge/ELK-Logging-yellow?style=for-the-badge&logo=elastic)
-![Grafana](https://img.shields.io/badge/Grafana-Monitoring-orange?style=for-the-badge&logo=grafana)
+<div align="center">
 
-## 📖 Overview
+    [![Java](https://img.shields.io/badge/Java-17-orange?style=for-the-badge&logo=java)]()
+    [![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.x-green?style=for-the-badge&logo=spring-boot)]()
+    [![Docker](https://img.shields.io/badge/Docker-Container-blue?style=for-the-badge&logo=docker)]()
+    [![Jenkins](https://img.shields.io/badge/Jenkins-CI%2FCD-red?style=for-the-badge&logo=jenkins)]()
+    [![ELK Stack](https://img.shields.io/badge/ELK-Logging-yellow?style=for-the-badge&logo=elastic)]()
+    [![Grafana](https://img.shields.io/badge/Grafana-Monitoring-orange?style=for-the-badge&logo=grafana)]()
+
+</div>
+
+## 📝 Table of Contents
+
+* [Overview](#overview)
+* [Tech Stack & Infrastructure](#infrastructure)
+* [Project Structure](#structure)
+* [Installation & Setup](#setup)
+* [Configuration Snippets](#config)
+* [Author](#author)
+
+---
+
+## 📖 Overview <a name = "overview"></a>
 
 This project is a comprehensive implementation of a **Library Management System** using **Microservices Architecture**. Beyond basic functionality, this repository demonstrates a full **DevOps Lifecycle** implementation, including automated CI/CD pipelines, centralized logging, and real-time infrastructure monitoring.
 
@@ -25,7 +40,7 @@ The system is composed of loose-coupled services communicating via REST APIs and
 
 ---
 
-## 🚀 Tech Stack & Infrastructure
+## 🚀 Tech Stack & Infrastructure <a name = "infrastructure"></a>
 
 ### Application Layer
 
@@ -50,7 +65,7 @@ The system is composed of loose-coupled services communicating via REST APIs and
 
 ---
 
-## 📂 Project Structure (Monorepo)
+## 📂 Project Structure (Monorepo) <a name = "structure"></a>
 
 ```bash
 ├── anggota-service/       # Source code for Member Service
@@ -74,7 +89,7 @@ The system is composed of loose-coupled services communicating via REST APIs and
 
 ---
 
-## 🛠️ Installation & Setup
+## 🛠️ Installation & Setup <a name = "setup"></a>
 
 ### Prerequisites
 
@@ -117,7 +132,7 @@ docker-compose -f docker-compose-monitoring.yml up -d
 
 ---
 
-## ⚙️ Configuration Snippets
+## ⚙️ Configuration Snippets <a name = "config"></a>
 
 ### Jenkins Pipeline Example (Jenkinsfile)
 
@@ -169,7 +184,7 @@ scrape_configs:
 
 ---
 
-## 👨‍💻 Author
+## 👨‍💻 Author <a name = "author"></a>
 
 ### Rafi Maisshadiq
 
